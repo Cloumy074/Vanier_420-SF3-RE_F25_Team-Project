@@ -15,9 +15,9 @@
 
 = Task Description
 
-Our project, Interactive Wave Physics Simulator, is an application which aims to develop an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for students to understand better the concept of waves as it is also one of our program course for this semester.  
+Our project, the _Interactive Wave Physics Simulator_, is an application which aims to develop an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for students to understand better the concept of waves as it is also one of our program course for this semester.
 
-Users will be able to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. Thus, the application is centered in the domain of physics simulations. 
+The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. Thus, the application is centered in the domain of physics simulations.
 
 === Functionality
 
@@ -36,27 +36,28 @@ Main Window:
   - Bottom: Real-time equation display. 
 
 Visualization (Sample, might have different with final product):
-// #figure(
-//   image("interface_mockup.png"),
-//   caption: "Mockup of the main interface",
-// )
+
+#figure(
+  image("interface_mockup.jpg", height: 205pt),
+  caption: "Mockup of the main interface",
+)
 
 = Proposed Implementation Approach
 
 Technical overview: 
   - Programming language: Java 22
-  - Framework: JavaFX for GUI / Visualization
+  - Framework: JavaFX22 for GUI / Visualization
 
 Project Structure: 
   - _*TBD*_
 
 Libraries and Tools:
-  - JavaFX for GUI and visualization
-  - _*TBD*_
+  - JavaFX22 - GUI and visualization - https://openjfx.io/
+  - ChartFX - Chart Animation Library - https://github.com/fair-acc/chart-fx
 
 = Trello
 
-We will be using Trello to plan and track our tasks during the development process. Team members will be assigned to specific tasks and will update the sstatus on Trello as members progress.
+We will be using Trello to plan and track our tasks during the development process. Team members will be assigned to specific tasks and will update the status on Trello as members progress.
 
 === Trello Board Link
 
