@@ -3,7 +3,7 @@
 #show: bubble.with(
   title: "Interactive Wave Physics Simulator",
   subtitle: "Team Project Proposal",
-  author: "Yu Duo Zhang & YiXin Liu",
+  author: "Yu Duo Zhang & Yixin Liu",
   affiliation: "Vanier College",
   date: [September 12#super[th], 2025],
   year: "2025 - 2026",
@@ -39,7 +39,7 @@ Visualization (Sample, might have different with final product):
 
 #figure(
   image("interface_mockup.jpg", height: 205pt),
-  caption: "Mockup of the main interface",
+  caption: "(Hand-drawn Sample) Mockup of the main interface",
 )
 
 = Proposed Implementation Approach
@@ -49,11 +49,17 @@ Technical overview:
   - Framework: JavaFX22 for GUI / Visualization
 
 Project Structure: 
-  - _*TBD*_
+  - `Main.java`: Main program to run / Application entry point.
+  - `WaveSimulator.java`: Core logic for wave calculations.
+  - `WaveDisplay.java`: JavaFX scene for drawing waves animation and parameter controls.
+  - `ExportManager.java`: Handles exporting current visualizations as image files.
+  - `Utils.java`: Utility functions / tools for calculations.
+  - *Note that this is subject to change as we progress.*
 
 Libraries and Tools:
   - JavaFX22 - GUI and visualization - https://openjfx.io/
   - ChartFX - Chart Animation Library - https://github.com/fair-acc/chart-fx
+  - *Note that this is still mostly To Be Determined (TBD) and subject to change as we progress.*
 
 = Trello
 
