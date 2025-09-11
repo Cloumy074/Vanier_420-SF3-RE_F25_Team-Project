@@ -28,7 +28,18 @@ Users will be able to modify parameters (frequency, amplitude, wavelength, etc.)
 
 = Interface Visualization
 
-_TODO_
+Main Window:
+  - Top: Menu bar (File, Export, Help)
+  - Left Panel: Controls for wave parameters (frequency / amplitude / speed / wavelength / etc.) and wave type.
+  - Center: Animated wave visualization (2D graph for displacement to position or time).
+  - Right Panel: Additional controls (second wave / damping / etc.)
+  - Bottom: Real-time equation display. 
+
+Visualization (Sample, might have different with final product):
+// #figure(
+//   image("interface_mockup.png"),
+//   caption: "Mockup of the main interface",
+// )
 
 = Proposed Implementation Approach
 
