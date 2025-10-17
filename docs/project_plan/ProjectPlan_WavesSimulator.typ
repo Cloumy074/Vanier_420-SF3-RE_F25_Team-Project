@@ -15,6 +15,12 @@
 )
 
 = Project Summary
+== Project Idea 
+The _Interactive Wave Physics Simulator_ is an application which aims to develop an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for students to understand better the concept of waves as it is also one of our program course for this semester.   
+
+The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. Thus, the application is centered in the domain of physics simulations.
+
+== Model-View-Controller (MVC)
 
 = Task Breakdown
 
@@ -23,3 +29,11 @@
 = Trello Board Integration
 
 = Risk Management
+== Technical Issues
+
+== Scheduling Issues
+
+== Teamwork-Related Issues
+
+= Links (Trello Board & Git Repo)
+Trello: https://trello.com/b/QBSKjbH8/project 
