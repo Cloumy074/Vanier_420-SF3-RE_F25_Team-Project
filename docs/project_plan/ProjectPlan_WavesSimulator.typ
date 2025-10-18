@@ -22,6 +22,8 @@ The application will allow users to modify parameters (frequency, amplitude, wav
 
 == Model-View-Controller (MVC)
 === Model (Logic & Data Structure)
+The core of the application is built up with the wave equations and their parameters. Thus, the main data structure will include all parameters needed to define a wave, configured by the user through the user interface. 
+The application would also guide the user to understand how to use the simulator through the `Help` menu. Aside, user can also save the parameters defined in the simulator in a local file and load it back when needed. Graph exporting feature will also be implemented to allow user to save the wave graph as an image file.
 
 === View (UI/UX Design)
 The root of user interface will be implemented by using BorderPane Layout from JavaFx. This root will be divided into different sections:
@@ -38,6 +40,7 @@ The root of user interface will be implemented by using BorderPane Layout from J
   - The bottom section of the root layout will display the mathematical equation corresponding to current parameters defined by the user and to the graph. This will be shown by using a Label that updates dynamically as user changes the parameters.
 
 === Controller (Event Handling)
+All controls in the user interface will have event handlers or listeners attached. When user interacts with any control, the corresponding controller method will be involved to process the change, update the graph and equation.
 
 = Task Breakdown
 
