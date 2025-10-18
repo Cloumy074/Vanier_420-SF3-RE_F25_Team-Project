@@ -45,25 +45,62 @@ All controls in the user interface will have event handlers or listeners attache
 
 = Task Breakdown
 == Model 
-=== Core Logic
-=== Algorithms
-=== Data Structures
+- Wave Equations
+  - General Equation: $ y(x,t) = A sin(k x - w t +  delta)  $
+- Core Logic
+  - Default Constructor
+  - Parameter Setters and Getters
+  - Wave Calculation Methods
+- Data Structures
+  - All parameters will be saved as data members in the `WaveSimulator.java` class.
+  - Parameters: 
+      #table(
+      columns: (1fr, 1fr),
+      inset: 10pt,
+      align: center,
+      table.header(
+        [Variable],[Meaning]
+      ),
+      [$A$],[Amplitude],
+      [$k$],[Angular Wave Number],
+      [$w$],[Angular Frequency],
+      [$delta$],[Phase Difference]
+    ) 
 
 == View
-=== UI Layout 
-=== Styling
+- UI Layout (`WaveDisplay.java`)
+  - Left Control Panel 
+  - Center Graph Visualization
+  - Right Control Panel
+  - Top Menu Bar
+  - Bottom Equation Display
+
+- Styling (`style.css`)
+  - CSS Implementation
 
 == Controller
-=== Event Handlers
-=== User Input
+- Event Handlers
+  - Menu Actions
+  - Graph Update
+  - Equation Display Update
+  - Additional Controls
+- User Input
+  - Parameter Update
 
 == Other
-=== File I/O
-=== Graph Exporting
-=== Help Menu
-=== Testing
-=== Deployment
-=== Documentation
+- File I/O
+  - Parameter Saving and Loading
+- Graph Exporting
+  - Image Exporting
+- Help Menu
+  - User Guide with Pop-up Windows
+- Testing
+  - Unit Testing for Calculation Methods
+  - Integration Testing for User Interface
+- Documentation
+  - Code Comments
+  - User Manual
+  - Guide Documentation
 
 = Responsibilities and Task Allocation
 #table(
