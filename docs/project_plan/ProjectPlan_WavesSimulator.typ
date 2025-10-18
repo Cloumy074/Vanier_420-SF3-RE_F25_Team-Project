@@ -179,7 +179,14 @@ GitHub: https://github.com/Cloumy074/Vanier_420-SF3-RE_F25_Team-Project.git
 
 = Risk Management
 == Technical Issues
+If any technical issue arises to any team member, the member should inform the other member as soon as possible, so the team can find a solution together before the due date / deadline.
+
+If the issue cannot be resolved in time / is a long term issue, the member can reallocate some of their task to the other member to not affect the project timeline.
 
 == Scheduling Issues
+If any scheduling conflict arises due to exams / personal scheduling, the team member should inform the other member in advance to adjust the workload distribution accordingly, so that the project timeline is not affected.
 
 == Teamwork-Related Issues
+If codes written by one member cannot be merged properly to the main branch due to conflicts, the member should inform the other member for an review and assistance to resolve the conflicts. 
+
+If any communication related issue arises, the team member should inform the other member by other ways (in class, MIO, etc.) to ensure an effective update.
