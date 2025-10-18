@@ -46,10 +46,10 @@ All controls in the user interface will have event handlers or listeners attache
 = Task Breakdown
 == Model 
 - Wave Equations
-  - General Equation: $ y(x,t) = A sin(k x - w t +  delta)  $
+  - General Equation: $y(x,t) = A sin(k x - w t +  delta)$
 - Core Logic
   - Default Constructor
-  - Parameter Setters and Getters
+  - Variable Setters and Getters
   - Wave Calculation Methods
 - Data Structures
   - All parameters will be saved as data members in the `WaveSimulator.java` class.
@@ -99,20 +99,73 @@ All controls in the user interface will have event handlers or listeners attache
   - Integration Testing for User Interface
 - Documentation
   - Code Comments
-  - User Manual
-  - Guide Documentation
 
 = Responsibilities and Task Allocation
+== `WaveSimulator.java` Class
 #table(
   columns: (1fr, 1fr, 1fr),
   inset: 10pt,
   align: horizon,
   table.header(
-    [Module / Task],[Team Member],[Deadline]
+    [Task],[Team Member],[Deadline]
   ),
+  [Data Field],[],[],
+  [`WaveSimulator` Constructor],[],[],
+  [Getters and Setters],[],[],
+  [Calculation Methods],[],[],
+)
+== `WaveDisplay.java` Class
+#table(
+  columns: (1fr, 1fr, 1fr),
+  inset: 10pt,
+  align: horizon,
+  table.header(
+    [Task],[Team Member],[Deadline]
+  ),  
+  [Left Control Panel],[],[],
+  [Right Control Panel],[],[],
+  [Bottom Equation Display],[],[],
+  [Top Menu Bar],[],[],
+  [Center Graph Visualization],[],[],
+  [CSS Styling],[],[],
+)
+== `Utils` Class
+#table(
+  columns: (1fr, 1fr, 1fr),
+  inset: 10pt,
+  align: horizon,
+  table.header(
+    [Task],[Team Member],[Deadline]
+  ),  
+  [File I/O],[],[],
+  [Graph Exporting],[],[],
+)
+== Event Handlers
+#table(
+  columns: (1fr, 1fr, 1fr),
+  inset: 10pt,
+  align: horizon,
+  table.header(
+    [Task],[Team Member],[Deadline]
+  ),  
+  [Menu Actions],[],[],
+  [Parameter Update],[],[],
+  [Graph Update],[],[],
+  [Equation Display Update],[],[],
+  [Additional Controls],[],[],
+  [`Help` Menu],[],[],
+  [Unit Testing],[],[],
+  [Integration Testing],[],[],
+  [Code Comments],[Yu Duo Zhang & Yixin Liu],[Along the Development],
 )
 
 = Trello Board Integration
+== Links (Trello Board & Git Repo)
+Trello: https://trello.com/b/QBSKjbH8/project 
+
+GitHub: https://github.com/Cloumy074/Vanier_420-SF3-RE_F25_Team-Project.git
+
+== Trello Board Screenshot:
 
 = Risk Management
 == Technical Issues
@@ -120,6 +173,3 @@ All controls in the user interface will have event handlers or listeners attache
 == Scheduling Issues
 
 == Teamwork-Related Issues
-
-= Links (Trello Board & Git Repo)
-Trello: https://trello.com/b/QBSKjbH8/project 
