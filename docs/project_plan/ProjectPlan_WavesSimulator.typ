@@ -16,11 +16,28 @@
 
 = Project Summary
 == Project Idea 
-The _Interactive Wave Physics Simulator_ is an application which aims to develop an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for students to understand better the concept of waves as it is also one of our program course for this semester.   
+The _Interactive Wave Physics Simulator_ is an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for college students to understand better the concept of waves as it is also one of the *Physics* course for _Computer Science and Mathematic_ students in Quebec. 
 
-The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. Thus, the application is centered in the domain of physics simulations.
+The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. 
 
 == Model-View-Controller (MVC)
+=== Model (Logic & Data Structure)
+
+=== View (UI/UX Design)
+The root of user interface will be implemented by using BorderPane Layout from JavaFx. This root will be divided into different sections:
+
+- Top: Menu Bar (File, Exit, Help, etc.)
+  - Each of the control item will be a drop-down menu that contains different options for user to choose from.
+- Left: Parameter Panel (Frequency, Amplitude, Wavelength, Wave Type, etc.)
+  - Each Parameter will be represented by a Label and a corresponding TextField and ComboBox to input the value and unit.
+- Center: Visualization (Wave Graph)
+  - This section will be implemented using ChartFX library to display the corresponding wave graph based on the user input.
+- Right: Control Panel (Additional Controls)
+  - Each control will first have a CheckBox to enable or disable the feature, followed by corresponding controls to adjust the settings.
+- Bottom: Equation Display
+  - The bottom section of the root layout will display the mathematical equation corresponding to current parameters defined by the user and to the graph. This will be shown by using a Label that updates dynamically as user changes the parameters.
+
+=== Controller (Event Handling)
 
 = Task Breakdown
 
