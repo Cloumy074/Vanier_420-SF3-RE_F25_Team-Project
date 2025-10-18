@@ -109,10 +109,10 @@ All controls in the user interface will have event handlers or listeners attache
   table.header(
     [Task],[Team Member],[Deadline]
   ),
-  [Data Field],[],[],
-  [Constructor],[],[],
-  [Getters and Setters],[],[],
-  [Calculation Methods],[],[],
+  [Data Field],[Yixin Liu],[Week 8],
+  [Constructor],[Yu Duo Zhang],[Week 8],
+  [Getters and Setters],[Yu Duo Zhang],[Week 8],
+  [Calculation Methods],[Yu Duo Zhang],[Week 10],
 )
 == `WaveDisplay.java` Class
 #table(
@@ -122,12 +122,13 @@ All controls in the user interface will have event handlers or listeners attache
   table.header(
     [Task],[Team Member],[Deadline]
   ),  
-  [Left Control Panel],[],[],
-  [Right Control Panel],[],[],
-  [Bottom Equation Display],[],[],
-  [Top Menu Bar],[],[],
-  [Center Graph Visualization],[],[],
-  [CSS Styling],[],[],
+  [Root Layout],[Yixin Liu],[Week 8],
+  [Left Control Panel],[Yixin Liu],[Week 10],
+  [Right Control Panel],[Yu Duo Zhang],[Week 10],
+  [Bottom Equation Display],[Yixin Liu],[Week 10],
+  [Top Menu Bar],[Yixin Liu],[Week 10],
+  [Center Graph Visualization],[Yu Duo Zhang],[Week 14],
+  [CSS Styling],[Yu Duo Zhang],[Week 14],
 )
 == `Utils` Class
 #table(
@@ -137,8 +138,8 @@ All controls in the user interface will have event handlers or listeners attache
   table.header(
     [Task],[Team Member],[Deadline]
   ),  
-  [File I/O],[],[],
-  [Graph Exporting],[],[],
+  [File I/O],[Yixin Liu],[Week 14],
+  [Graph Exporting],[Yu Duo Zhang],[Week 14],
 )
 == Event Handlers
 #table(
@@ -148,11 +149,12 @@ All controls in the user interface will have event handlers or listeners attache
   table.header(
     [Task],[Team Member],[Deadline]
   ),  
-  [Menu Actions],[],[],
-  [Parameter Update],[],[],
-  [Graph Update],[],[],
-  [Equation Display Update],[],[],
-  [Additional Controls],[],[],
+  [Menu Actions Except `Help`],[Yu Duo Zhang],[Week 10],
+  [Help Menu],[Yu Duo Zhang],[Week 14],
+  [Parameter Update],[Yu Duo Zhang],[Week 10],
+  [Graph Update],[Yu Duo Zhang],[Week 14],
+  [Equation Display Update],[Yixin Liu],[Week 10],
+  [Additional Controls],[Yu Duo Zhang],[Week 14],
 )
 == Other Tasks
 #table(
@@ -162,8 +164,8 @@ All controls in the user interface will have event handlers or listeners attache
   table.header(
     [Task],[Team Member],[Deadline]
   ),
-  [Unit Testing],[],[],
-  [Integration Testing],[],[],
+  [Unit Testing],[Yixin Liu],[Week 14],
+  [Integration Testing],[Yixin Liu],[Week 14],
   [Code Comments],[Yu Duo Zhang & Yixin Liu],[Along the Development],
 )
 
