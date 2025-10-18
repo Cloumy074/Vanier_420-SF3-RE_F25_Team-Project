@@ -90,10 +90,10 @@ All controls in the user interface will have event handlers or listeners attache
 == Other
 - File I/O
   - Parameter Saving and Loading
-- Graph Exporting
-  - Image Exporting
 - Help Menu
   - User Guide with Pop-up Windows
+- Graph Exporting
+  - Image Exporting
 - Testing
   - Unit Testing for Calculation Methods
   - Integration Testing for User Interface
@@ -110,7 +110,7 @@ All controls in the user interface will have event handlers or listeners attache
     [Task],[Team Member],[Deadline]
   ),
   [Data Field],[],[],
-  [`WaveSimulator` Constructor],[],[],
+  [Constructor],[],[],
   [Getters and Setters],[],[],
   [Calculation Methods],[],[],
 )
@@ -153,7 +153,15 @@ All controls in the user interface will have event handlers or listeners attache
   [Graph Update],[],[],
   [Equation Display Update],[],[],
   [Additional Controls],[],[],
-  [`Help` Menu],[],[],
+)
+== Other Tasks
+#table(
+  columns: (1fr, 1fr, 1fr),
+  inset: 10pt,
+  align: horizon,
+  table.header(
+    [Task],[Team Member],[Deadline]
+  ),
   [Unit Testing],[],[],
   [Integration Testing],[],[],
   [Code Comments],[Yu Duo Zhang & Yixin Liu],[Along the Development],
