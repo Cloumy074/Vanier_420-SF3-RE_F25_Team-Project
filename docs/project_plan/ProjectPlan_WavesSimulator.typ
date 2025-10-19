@@ -16,7 +16,7 @@
 
 = Project Summary
 == Project Idea 
-The _Interactive Wave Physics Simulator_ is an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for college students to understand better the concept of waves as it is also one of the *Physics* course for _Computer Science and Mathematic_ students in Quebec. 
+The _Interactive Wave Physics Simulator_ is an interactive application that simulate various types of waves. The purpose is to provide an educational tool for college students to understand better the concept of waves as it is also part of contents for our *Physics* course for _Computer Science and Mathematic_ students in Quebec. 
 
 The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. 
 
@@ -25,6 +25,16 @@ The application will allow users to modify parameters (frequency, amplitude, wav
 The core of the application is built up with the wave equations and their parameters. Thus, the main data structure will include all parameters needed to define a wave, configured by the user through the user interface. 
 
 The application would also guide the user to understand how to use the simulator through the _Help_ menu. Aside, user can also save the parameters defined in the simulator in a local file and load it back when needed. Graph exporting feature will also be implemented to allow user to save the wave graph as an image file.
+
+The models should include:
+- Data Fields
+  - Including all parameters 
+- Basic Constructor
+  - Default & With Parameters
+- Getters & Setters
+  - For all parameters
+- Methods for Calculations
+  - For the Waves Equation
 
 === View (UI/UX Design)
 The root of user interface will be implemented by using BorderPane Layout from JavaFx. This root will be divided into different sections:
@@ -41,12 +51,12 @@ The root of user interface will be implemented by using BorderPane Layout from J
   - The bottom section of the root layout will display the mathematical equation corresponding to current parameters defined by the user and to the graph. This will be shown by using a Label that updates dynamically as user changes the parameters.
 
 === Controller (Event Handling)
-All controls in the user interface will have event handlers or listeners attached. When user interacts with any control, the corresponding controller method will be involved to process the change, update the graph and equation.
+All components / controllers of the user interface in the view are attached to a corresponding event handler or listener. When user interacts with the interface, the corresponding event handler or listener will be involved to process the change, such as updating the graph and equation.
 
 = Task Breakdown
 == Model 
 - Wave Equations
-  - General Equation: $y(x,t) = A sin(k x - w t +  delta)$
+  - General Equation: $y(x,t) = A sin(k x - w t + delta)$
 - Core Logic
   - Default Constructor
   - Variable Setters and Getters
@@ -176,10 +186,13 @@ Trello: https://trello.com/b/QBSKjbH8/project
 GitHub: https://github.com/Cloumy074/Vanier_420-SF3-RE_F25_Team-Project.git
 
 == Trello Board Screenshot:
+#image("TrelloBoard.png", alt: "Trello Board Screenshot")
 
 = Risk Management
 == Technical Issues
-If any technical issue arises to any team member, the member should inform the other member as soon as possible, so the team can find a solution together before the due date / deadline.
+If one member meets hardware issues, they can use GitHub to continue their development on other hardwares. 
+
+If one member meets coding issues, such as incomprehensible bugs, the member should inform the other member as soon as possible, so the team can find a solution together before the due date / deadline.
 
 If the issue cannot be resolved in time / is a long term issue, the member can reallocate some of their task to the other member to not affect the project timeline.
 
