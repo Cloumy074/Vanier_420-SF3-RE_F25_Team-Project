@@ -1,3 +1,7 @@
+package model;
+
+import utils.WaveType;
+
 /**
  *  Core logic for wave calculations.
  */
