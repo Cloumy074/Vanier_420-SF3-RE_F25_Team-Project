@@ -1,3 +1,7 @@
+package model;
+
+import utils.WaveType;
+
 /**
  *  Core logic for wave calculations.
  */
@@ -9,7 +13,7 @@ public class WaveSimulator {
     private WaveType type;
 
     /**
-     * No-args Contructor with Sample SIN wave data.
+     * No-args Constructor with Sample SIN wave data.
      */
     public WaveSimulator() {
         this.amplitude = 1;
@@ -20,7 +24,7 @@ public class WaveSimulator {
     }
     
     /**
-     * Full-args Contructor 
+     * Full-args Constructor
      * @param amplitude The Amplitude of the Wave
      * @param angularWaveNum The Angular Wave Number of the Wave
      * @param angFreq The Angular Frequency of the Wave

@@ -27,8 +27,9 @@ replay_pid*
 nbproject/private/
 nbproject/build-impl.xml
 
-# Compiled class files
-*.class
+# IntelliJ IDEA project files
+.idea/
+*.iml
 
 # Build folders
 build/
@@ -37,3 +38,7 @@ dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+/nb-configuration.xml
+/nbactions.xml
+target
