@@ -1,14 +1,12 @@
 #import "@preview/bubble:0.2.2": *
 
 #show: bubble.with(
-  title: "Interactive Wave Physics Simulator",
-  subtitle: "Team Project Proposal",
+  title: "Team Project Proposal",
+  subtitle: "Program Development in a Graphical Environment",
   author: "Yu Duo Zhang & Yixin Liu",
-  affiliation: "Vanier College",
-  date: [September 12#super[th], 2025],
+  date: [November 14#super[th], 2025],
   year: "2025 - 2026",
-  class: "420-SF3-RE",
-  other: ("Program Development in a Graphical Environment", "Prof.: Nagat Drawel"),
+  other: ("Interactive Wave Physics Simulator", "Vanier College", "420-SF3-RE", "Prof.: Nagat Drawel"),
   main-color: "D1343E",
   logo: image("vanier-logo.png"),
 )
@@ -17,7 +15,7 @@
 
 Our project, the _Interactive Wave Physics Simulator_, is an application which aims to develop an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for students to understand better the concept of waves as it is also one of our program course for this semester.
 
-The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations and their mathematical relationships. Thus, the application is centered in the domain of physics simulations.
+The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations ($A*cos(w t + delta)$) and their mathematical relationships (for example its frequency $lambda$ would be $lambda = (2pi)/k$). Thus, the application is centered in the domain of physics simulations.
 
 === Functionality
 
@@ -50,16 +48,14 @@ Technical overview:
 
 Project Structure:
 - `Main.java`: Main program to run / Application entry point.
-- `WaveSimulator.java`: Core logic for wave calculations.
-- `WaveDisplay.java`: JavaFX scene for drawing waves animation and parameter controls.
-- `ExportManager.java`: Handles exporting current visualizations as image files.
-- `Utils.java`: Utility functions / tools for calculations.
-- *Note that this is subject to change as we progress.*
+- `WaveSimulator.java`: (Model) Core logic for wave calculations.
+- `WaveDisplay.java`: (View) JavaFX scene for drawing waves animation and parameter controls.
+- `WaveController.java`: (Controller) Event handling for user interactions.
+- `Utils.java`: Utility functions / tools for calculations, including import and export of the file and exporting the graph as image.
 
 Libraries and Tools:
 - JavaFX22 - GUI and visualization - https://openjfx.io/
 - ChartFX - Chart Animation Library - https://github.com/fair-acc/chart-fx
-- *Note that this is still mostly To Be Determined (TBD) and subject to change as we progress.*
 
 = Trello
 
