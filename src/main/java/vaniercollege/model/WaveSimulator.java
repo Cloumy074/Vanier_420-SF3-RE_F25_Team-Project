@@ -1,13 +1,14 @@
-package model;
+package vaniercollege.model;
 
 import lombok.*;
-import utils.WaveType;
+import vaniercollege.utils.WaveType;
 
 /**
  *  Core logic for wave calculations.
  */
 public class WaveSimulator {
-    @Getter @Setter private double amplitude;
+    @Getter @Setter
+    private double amplitude;
     @Getter @Setter private double angWaveNum;
     @Getter @Setter private double angFreq;
     @Getter @Setter private double phaseDiff;

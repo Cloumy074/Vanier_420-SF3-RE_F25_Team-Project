@@ -1,4 +1,4 @@
-package utils;
+package vaniercollege.utils;
 
 /**
  * An enum listing for available types of a wave, which are SIN and COS.
