@@ -1,4 +1,4 @@
-package utils;
+package vaniercollege.utils;
 
 /**
  *  Utility functions / tools for calculations.
