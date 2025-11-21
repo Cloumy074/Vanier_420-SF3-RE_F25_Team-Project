@@ -1,9 +1,9 @@
-module vaniercollege {
-    requires javafx.fxml;
+module vaniercollege.view {
     requires javafx.controls;
+    requires javafx.fxml;
     requires static lombok;
 
 
-    opens vaniercollege to javafx.fxml;
-    exports vaniercollege;
+    exports vaniercollege.view;
+    opens vaniercollege.controller to javafx.fxml;
 }

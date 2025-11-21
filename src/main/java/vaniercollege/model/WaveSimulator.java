@@ -7,7 +7,8 @@ import vaniercollege.utils.WaveType;
  *  Core logic for wave calculations.
  */
 public class WaveSimulator {
-    @Getter @Setter
+    @Getter
+    @Setter
     private double amplitude;
     @Getter @Setter private double angWaveNum;
     @Getter @Setter private double angFreq;
