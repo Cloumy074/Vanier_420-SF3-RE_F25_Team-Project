@@ -6,11 +6,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import vaniercollege.utils.WaveType;
-
-import java.util.IllegalFormatCodePointException;
 
 import static vaniercollege.utils.WaveType.*;
 
@@ -28,19 +24,10 @@ public class WaveController {
     private LineChart<Double, Double> chart;
 
     @FXML
-    private Pane chartDisplay;
-
-    @FXML
     private Label equation;
 
     @FXML
-    private VBox leftCtrl;
-
-    @FXML
     private TextField phaseDiff;
-
-    @FXML
-    private VBox rightCtrl;
 
     @FXML
     private ComboBox<WaveType> type;
@@ -72,19 +59,9 @@ public class WaveController {
     }
 
     @FXML
-    void showSecondWave(ActionEvent event) {
-
-    }
-
-    @FXML
     void updateChart() {
         equation.setText(String.format("y(x,t) = %s%s(%sx%s%s)",
                 getAmplitude(), getType(), getAngWaveNum(), getAngFreq(), getPhaseDiff()));
-    }
-
-    @FXML
-    void userGuide(ActionEvent event) {
-
     }
 
     public String getAmplitude() {
