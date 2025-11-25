@@ -1,11 +1,11 @@
 package vaniercollege.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import vaniercollege.utils.Utils;
 import vaniercollege.utils.WaveType;
 
 import static vaniercollege.utils.WaveType.*;
@@ -39,23 +39,23 @@ public class WaveController {
     }
 
     @FXML
-    void exportImage(ActionEvent event) {
-
+    void exportImage() {
+        Utils.exportImage();
     }
 
     @FXML
-    void loadFile(ActionEvent event) {
-
+    void loadFile() {
+        Utils.importFile();
     }
 
     @FXML
-    void saveAsFile(ActionEvent event) {
-
+    void saveAsFile() {
+        Utils.exportFile();
     }
 
     @FXML
-    void saveFile(ActionEvent event) {
-
+    void saveFile() {
+        Utils.saveFile();
     }
 
     @FXML
