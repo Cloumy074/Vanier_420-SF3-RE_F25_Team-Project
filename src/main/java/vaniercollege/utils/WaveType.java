@@ -7,5 +7,15 @@ package vaniercollege.utils;
  */
 public enum WaveType {
     SIN,
-    COS
+    COS;
+
+    @Override
+    public String toString() {
+        if (this == SIN) {
+            return "sin";
+        }
+        else {
+            return "cos";
+        }
+    }
 }

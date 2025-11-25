@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -39,42 +42,52 @@
       </MenuBar>
    </top>
    <center>
-      <Pane fx:id="chartDisplay" prefHeight="200.0" prefWidth="370.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="chartDisplay" BorderPane.alignment="CENTER">
+         <children>
+            <LineChart fx:id="chart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="460.0" title="Wave Display">
+              <xAxis>
+                <CategoryAxis label="Time (Second)" prefWidth="412.0" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children></Pane>
    </center>
    <left>
-      <VBox fx:id="leftCtrl" alignment="CENTER" prefHeight="275.0" prefWidth="175.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="leftCtrl" alignment="CENTER" prefHeight="275.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Label text="Frequency:" />
-                  <TextField fx:id="frequency" prefHeight="23.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                  <Label text="Amplitude" />
+                  <TextField fx:id="amplitude" alignment="CENTER" onKeyTyped="#updateChart" prefHeight="23.0" prefWidth="60.0" text="1" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Label text="Amplitude: " />
-                  <TextField fx:id="amplitude" prefHeight="23.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                  <Label text="Ang. Wave Num." />
+                  <TextField fx:id="angWaveNum" alignment="CENTER" onKeyTyped="#updateChart" prefHeight="23.0" prefWidth="60.0" text="1" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Label text="Speed: " />
-                  <TextField fx:id="speed" prefHeight="23.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                  <Label text="Ang. Freq" />
+                  <TextField fx:id="angFreq" alignment="CENTER" onKeyTyped="#updateChart" prefHeight="23.0" prefWidth="60.0" text="1" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Label text="Wavelength:" />
-                  <TextField fx:id="wavelength" prefHeight="23.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                  <Label text="Phase Diff." />
+                  <TextField fx:id="phaseDiff" alignment="CENTER" onKeyTyped="#updateChart" prefHeight="23.0" prefWidth="60.0" text="0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Type:" />
-                  <ChoiceBox fx:id="type" prefHeight="23.0" prefWidth="115.0" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="type" onAction="#updateChart" prefHeight="23.0" prefWidth="115.0" visibleRowCount="2" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>
@@ -94,7 +107,7 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="equation" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Test Display" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+            <Label fx:id="equation" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="y(x,t) = Asin(kx-ωt+δ)" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="24.0" />
                </font>
