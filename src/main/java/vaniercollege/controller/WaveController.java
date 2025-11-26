@@ -1,18 +1,27 @@
 package vaniercollege.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import lombok.Getter;
 import vaniercollege.model.WaveSimulator;
 import vaniercollege.utils.Utils;
 import vaniercollege.utils.WaveType;
 
+import java.io.File;
+
 import static vaniercollege.utils.WaveType.*;
 
 public class WaveController {
+    @FXML
+    private NumberAxis yAxis;
+
     @FXML
     private TextField amplitude;
 
@@ -52,7 +61,14 @@ public class WaveController {
 
     @FXML
     public void exportImage() {
-        Utils.exportImage();
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export To");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files", "*.png*"));
+        File saveFile = fileChooser.showSaveDialog(stage);
+        if (saveFile != null) {
+            Utils.exportImage(saveFile.getAbsolutePath(),chart);
+        }
     }
 
     @FXML
@@ -77,6 +93,14 @@ public class WaveController {
         wave.setAngFreq(angFreq.getText().isEmpty() ? 1.0 : wave.setNum(angFreq.getText()));
         wave.setPhaseDiff(phaseDiff.getText().isEmpty() ? 0.0 : wave.setNum(phaseDiff.getText()));
         wave.setType(type.getValue());
+
+        if (wave.getAmplitude() >= 5) {
+            yAxis.setAutoRanging(true);
+        } else {
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(-5);
+            yAxis.setUpperBound(5);
+        }
         
         equation.setText(String.format("y(x,t) = %s%s(%sx%s%s)",
                 getAmplitude(), getType(), getAngWaveNum(), getAngFreq(), getPhaseDiff()));
@@ -141,5 +165,14 @@ public class WaveController {
 
     public String getType() {
         return type.getValue().toString();
+    }
+
+    public void playAnim() {
+    }
+
+    public void playSound() {
+    }
+
+    public void reset() {
     }
 }
