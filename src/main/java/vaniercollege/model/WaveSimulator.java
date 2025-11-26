@@ -99,15 +99,10 @@ public class WaveSimulator {
         if(input.contains("\\pi")) {
             int idxMult =  input.indexOf("\\") - 1;
             if(idxMult != -1) {
-                if(input.charAt(idxMult) == '-') {
-                    return -3.14;
-                } else {
-                    num += Double.parseDouble(String.valueOf(input.charAt(idxMult))) * 3.14;
-                }
+                num += Double.parseDouble(input.replace("\\pi","")) * 3.14;
             } else {
                 num += 3.14;
             }
-            input = input.replace("\\pi", "");
         } else if(input.equals("-")) {
             return 0;
         } else if (input.contains("\\")) {

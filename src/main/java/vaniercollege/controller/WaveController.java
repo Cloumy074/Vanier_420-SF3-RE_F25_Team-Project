@@ -37,7 +37,7 @@ public class WaveController {
     private final WaveSimulator wave =  new WaveSimulator();
 
     @FXML
-    void initialize() {
+    public void initialize() {
         type.getItems().addAll(SIN,COS);
         type.setValue(SIN);
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -51,27 +51,27 @@ public class WaveController {
     }
 
     @FXML
-    void exportImage() {
+    public void exportImage() {
         Utils.exportImage();
     }
 
     @FXML
-    void loadFile() {
+    public void loadFile() {
         Utils.importFile();
     }
 
     @FXML
-    void saveAsFile() {
+    public void saveAsFile() {
         Utils.exportFile();
     }
 
     @FXML
-    void saveFile() {
+    public void saveFile() {
         Utils.saveFile();
     }
 
     @FXML
-    void updateChart() {
+    public void updateChart() {
         wave.setAmplitude(amplitude.getText().isEmpty() ? 1.0 : wave.setNum(amplitude.getText()));
         wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 1.0 : wave.setNum(angWaveNum.getText()));
         wave.setAngFreq(angFreq.getText().isEmpty() ? 1.0 : wave.setNum(angFreq.getText()));
