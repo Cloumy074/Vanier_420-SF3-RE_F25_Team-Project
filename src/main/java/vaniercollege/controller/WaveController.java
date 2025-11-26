@@ -2,9 +2,11 @@ package vaniercollege.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import vaniercollege.model.WaveSimulator;
 import vaniercollege.utils.Utils;
 import vaniercollege.utils.WaveType;
 
@@ -21,7 +23,7 @@ public class WaveController {
     private TextField angWaveNum;
 
     @FXML
-    private LineChart<Double, Double> chart;
+    private LineChart<Number, Number> chart;
 
     @FXML
     private Label equation;
@@ -32,10 +34,20 @@ public class WaveController {
     @FXML
     private ComboBox<WaveType> type;
 
+    private final WaveSimulator wave =  new WaveSimulator();
+
     @FXML
     void initialize() {
         type.getItems().addAll(SIN,COS);
         type.setValue(SIN);
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Wave");
+        for (int i = 0; i < wave.getPoints().length; i++) {
+            if (wave.getPoints()[i][0] != 0 && wave.getPoints()[i][1] != 0) {
+                series.getData().add(new XYChart.Data<>(wave.getPoints()[i][0], wave.getPoints()[i][1]));
+            }
+        }
+        chart.getData().add(series);
     }
 
     @FXML
@@ -60,8 +72,25 @@ public class WaveController {
 
     @FXML
     void updateChart() {
+        wave.setAmplitude(amplitude.getText().isEmpty() ? 1.0 : wave.setNum(amplitude.getText()));
+        wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 1.0 : wave.setNum(angWaveNum.getText()));
+        wave.setAngFreq(angFreq.getText().isEmpty() ? 1.0 : wave.setNum(angFreq.getText()));
+        wave.setPhaseDiff(phaseDiff.getText().isEmpty() ? 0.0 : wave.setNum(phaseDiff.getText()));
+        wave.setType(type.getValue());
+        
         equation.setText(String.format("y(x,t) = %s%s(%sx%s%s)",
                 getAmplitude(), getType(), getAngWaveNum(), getAngFreq(), getPhaseDiff()));
+        
+        wave.setPoints();
+        chart.getData().clear();
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Wave");
+        for (int i = 0; i < wave.getPoints().length; i++) {
+            if (wave.getPoints()[i][0] != 0 && wave.getPoints()[i][1] != 0) {
+                series.getData().add(new XYChart.Data<>(wave.getPoints()[i][0], wave.getPoints()[i][1]));
+            }
+        }
+        chart.getData().add(series);
     }
 
     public String getAmplitude() {
@@ -100,6 +129,9 @@ public class WaveController {
             result = "";
         } else {
             result =  "+" + phaseDiff.getText();
+        }
+        if (phaseDiff.getText().contains("-")) {
+            result = "-" +  phaseDiff.getText().replace("-", "");
         }
         if (phaseDiff.getText().contains("\\pi")) {
             result = "+" + phaseDiff.getText().replace("\\pi", "π");

@@ -40,10 +40,10 @@
          <children>
             <LineChart fx:id="chart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="600.0" title="Wave Display">
               <xAxis>
-                <CategoryAxis label="Time (Second)" prefWidth="412.0" />
+                <NumberAxis label="Position (x)" prefWidth="412.0" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis side="LEFT" label="Amplitude" />
               </yAxis>
             </LineChart>
          </children></Pane>

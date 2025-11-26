@@ -7,9 +7,7 @@ import vaniercollege.utils.WaveType;
  *  Core logic for wave calculations.
  */
 public class WaveSimulator {
-    @Getter
-    @Setter
-    private double amplitude;
+    @Getter @Setter private double amplitude;
     @Getter @Setter private double angWaveNum;
     @Getter @Setter private double angFreq;
     @Getter @Setter private double phaseDiff;
@@ -17,6 +15,7 @@ public class WaveSimulator {
     private double waveLength;
     private double frequency;
     private double speed;
+    @Getter private double[][] points =  new double[1500][2];
 
     /**
      * No-args Constructor with Sample SIN wave data.
@@ -30,6 +29,7 @@ public class WaveSimulator {
         this.speed = getSpeed();
         this.frequency = getFrequency();
         this.waveLength = getWaveLength();
+        this.setPoints();
     }
     
     /**
@@ -49,6 +49,7 @@ public class WaveSimulator {
         this.speed = this.getSpeed();
         this.frequency = this.getFrequency();
         this.waveLength = this.getWaveLength();
+        this.setPoints();
     }
     
     public double getWaveLength() {
@@ -76,5 +77,45 @@ public class WaveSimulator {
             }
         }
         return result;
+    }
+
+    public void setPoints() {
+        double start = 0.01;
+        double end = 15.00;
+        int idx = 0;
+
+        while (start <= end && idx < points.length) {
+            points[idx][0] = start;
+            points[idx][1] = getYPos(start, 0);
+            start = start + 0.1;
+            idx++;
+        }
+    }
+
+    public double setNum(String input) {
+        double num = 0;
+        input = input.replace(" ","");
+
+        if(input.contains("\\pi")) {
+            int idxMult =  input.indexOf("\\") - 1;
+            if(idxMult != -1) {
+                if(input.charAt(idxMult) == '-') {
+                    return -3.14;
+                } else {
+                    num += Double.parseDouble(String.valueOf(input.charAt(idxMult))) * 3.14;
+                }
+            } else {
+                num += 3.14;
+            }
+            input = input.replace("\\pi", "");
+        } else if(input.equals("-")) {
+            return 0;
+        } else if (input.contains("\\")) {
+            return 0;
+        } else {
+            num += Double.parseDouble(input);
+        }
+
+        return num;
     }
 }
