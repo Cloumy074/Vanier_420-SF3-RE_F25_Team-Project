@@ -64,7 +64,7 @@ public class WaveSimulator {
         return getAngFreq() / getAngWaveNum();
     }
     
-    public double getYPos(double x, double t) {
+    public double getYPos(double x, int t) {
         WaveType waveType = getType();
         double result = 0;
         

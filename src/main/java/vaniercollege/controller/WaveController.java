@@ -1,22 +1,25 @@
 package vaniercollege.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
+import javafx.scene.Node;
 import javafx.scene.chart.*;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import vaniercollege.model.WaveSimulator;
-import vaniercollege.utils.Utils;
-import vaniercollege.utils.WaveType;
+import vaniercollege.utils.*;
 
 import java.io.File;
 
 import static vaniercollege.utils.WaveType.*;
 
 public class WaveController {
+    @FXML
+    public Button playAnimBtn;
+
+    @FXML
+    public Button playSoundBtn;
+
     @FXML
     private NumberAxis yAxis;
 
@@ -100,8 +103,7 @@ public class WaveController {
             yAxis.setUpperBound(5);
         }
         
-        equation.setText(String.format("y(x,t) = %s%s(%sx%s%s)",
-                getAmplitude(), getType(), getAngWaveNum(), getAngFreq(), getPhaseDiff()));
+        equation.setText(updateEquation());
         
         wave.setPoints();
         chart.getData().clear();
@@ -115,6 +117,28 @@ public class WaveController {
         chart.getData().add(series);
     }
 
+    private String updateEquation() {
+        String equation = "y(x,t) = Asin(kx-ωt+δ)";
+
+        if (!getAmplitude().isEmpty()) {
+            equation = equation.replace("A", getAmplitude());
+        }
+        if (!getAngWaveNum().isEmpty()) {
+            equation = equation.replace("k", getAngWaveNum());
+        }
+        if (!getAngFreq().isEmpty()) {
+            equation = equation.replace("-ωt", getAngFreq());
+        }
+        if (!getPhaseDiff().isEmpty()) {
+            equation = equation.replace("+δ", getPhaseDiff());
+        }
+        if (!getType().isEmpty()) {
+            equation = equation.replace("sin",  getType());
+        }
+
+        return equation;
+    }
+
     public String getAmplitude() {
         if (amplitude.getText().isEmpty() || amplitude.getText().equals("1")) {
             return "";
@@ -125,7 +149,7 @@ public class WaveController {
 
     public String getAngFreq() {
         if (angFreq.getText().equals("1")) {
-            return "t";
+            return "-t";
         }
         else if (angFreq.getText().isEmpty() || angFreq.getText().equals("0")) {
             return "";
