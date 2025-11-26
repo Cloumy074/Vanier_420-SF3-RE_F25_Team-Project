@@ -1,6 +1,5 @@
 package vaniercollege.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.*;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lombok.Getter;
 import vaniercollege.model.WaveSimulator;
 import vaniercollege.utils.Utils;
 import vaniercollege.utils.WaveType;
@@ -174,5 +172,11 @@ public class WaveController {
     }
 
     public void reset() {
+        amplitude.setText("1");
+        angWaveNum.setText("1");
+        angFreq.setText("1");
+        phaseDiff.setText("0");
+        type.setValue(SIN);
+        updateChart();
     }
 }
