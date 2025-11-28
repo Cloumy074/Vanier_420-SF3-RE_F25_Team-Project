@@ -4,8 +4,13 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.image.WritableImage;
 import javafx.embed.swing.SwingFXUtils;
+import vaniercollege.model.WaveSimulator;
+
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *  Utility functions / tools for calculations.
@@ -16,15 +21,29 @@ public class Utils {
     /**
      * Export a CSV file to save the wave.
      */
-    public static void exportFile() {
-        // Todo
+    public static void exportFile(WaveSimulator wave, String path) {
+        File file = new File(path);
+        try (FileWriter fw = new FileWriter(file, false)) {
+            fw.write(wave.toString());
+        } catch (IOException e) {
+            System.out.println("Fail to write to the file");
+        }
     }
 
     /**
      * Import a CSV file to load the wave.
      */
-    public static void importFile() {
-        // Todo
+    public static String[] importFile(String path) {
+        File file = new File(path);
+        String[] datas = new String[5];
+        try (Scanner input = new Scanner(file)) {
+            String data = input.nextLine();
+            datas = data.split(",");
+        } catch (IOException e) {
+            System.out.printf("File %s does not exist%n", path);
+        }
+
+        return datas;
     }
 
     /**
@@ -39,12 +58,5 @@ public class Utils {
             ImageIO.write(SwingFXUtils.fromFXImage(wi, null), "png", file);
         } catch (Exception _) {
         }
-    }
-
-    /**
-     * Save the current file. If no file is currently opened, Jump to exportFile().
-     */
-    public static void saveFile() {
-        // Todo
     }
 }

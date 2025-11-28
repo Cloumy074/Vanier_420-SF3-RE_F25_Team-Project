@@ -31,7 +31,7 @@ public class WaveSimulator {
         this.speed = getSpeed();
         this.frequency = getFrequency();
         this.waveLength = getWaveLength();
-        this.setPoints();
+        this.setPoints(0);
     }
     
     /**
@@ -51,7 +51,7 @@ public class WaveSimulator {
         this.speed = this.getSpeed();
         this.frequency = this.getFrequency();
         this.waveLength = this.getWaveLength();
-        this.setPoints();
+        this.setPoints(0);
     }
 
     /**
@@ -84,7 +84,7 @@ public class WaveSimulator {
      * @param t The time.
      * @return the Y position of the wave.
      */
-    public double getYPos(double x, int t) {
+    public double getYPos(double x, double t) {
         WaveType waveType = getType();
         double result = 0;
         
@@ -102,14 +102,14 @@ public class WaveSimulator {
     /**
      * Set all the Y positions of the Wave to make a series of points for the chart.
      */
-    public void setPoints() {
+    public void setPoints(double time) {
         double start = 0.1;
         double end = 15.00;
         int idx = 0;
 
         while (start <= end && idx < points.length) {
             points[idx][0] = start;
-            points[idx][1] = getYPos(start, 0);
+            points[idx][1] = getYPos(start, time);
             start = start + 0.1;
             idx++;
         }
@@ -121,6 +121,7 @@ public class WaveSimulator {
      * @return the number that user meant by the input.
      */
     public double convertToNum(String input) {
+        input = input.replace(" ","");
         double num = 0;
         // Discard all spaces
         input = input.replace(" ","");
@@ -141,11 +142,19 @@ public class WaveSimulator {
         } else if (input.contains("\\")) {
             return 0;
         }
+        else if(input.isEmpty()) {
+            return 0;
+        }
         // If it does not need to handle PI, directly parse.
         else {
             num += Double.parseDouble(input);
         }
 
         return num;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%.2f,%.2f,%.2f,%.2f,%s",this.getAmplitude(), this.getAngWaveNum(), this.getAngFreq(), this.getPhaseDiff(), this.getType().toString().toUpperCase());
     }
 }

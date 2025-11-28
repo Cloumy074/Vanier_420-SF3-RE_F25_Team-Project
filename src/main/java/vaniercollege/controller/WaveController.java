@@ -5,6 +5,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lombok.*;
 import vaniercollege.model.WaveSimulator;
 import vaniercollege.utils.*;
 
@@ -30,6 +31,8 @@ public class WaveController {
     @FXML private ComboBox<WaveType> type;
 
     private final WaveSimulator wave =  new WaveSimulator();
+    @Getter @Setter private double time = 0;
+    private String currentFilePath;
 
     @FXML
     public void initialize() {
@@ -65,7 +68,23 @@ public class WaveController {
      */
     @FXML
     public void loadFile() {
-        Utils.importFile();
+        String[] datas;
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load Wave");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wave files", "*.wave*"));
+        File openFile = fileChooser.showOpenDialog(stage);
+        if (openFile != null) {
+            currentFilePath = openFile.getAbsolutePath();
+            datas = Utils.importFile(currentFilePath);
+            this.amplitude.setText(datas[0]);
+            this.angFreq.setText(datas[1]);
+            this.angWaveNum.setText(datas[2]);
+            this.phaseDiff.setText(datas[3]);
+            this.type.setValue(WaveType.valueOf(datas[4]));
+            updateChart();
+            updateEquation();
+        }
     }
 
     /**
@@ -73,7 +92,15 @@ public class WaveController {
      */
     @FXML
     public void saveAsFile() {
-        Utils.exportFile();
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save AS");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wave files", "*.wave*"));
+        File saveFile = fileChooser.showSaveDialog(stage);
+        if (saveFile != null) {
+            currentFilePath = saveFile.getAbsolutePath() + ".wave";
+            Utils.exportFile(wave, currentFilePath);
+        }
     }
 
     /**
@@ -81,7 +108,11 @@ public class WaveController {
      */
     @FXML
     public void saveFile() {
-        Utils.saveFile();
+        if (currentFilePath != null) {
+            Utils.exportFile(wave, currentFilePath);
+        } else {
+            saveAsFile();
+        }
     }
 
     /**
@@ -90,9 +121,9 @@ public class WaveController {
     @FXML
     public void updateChart() {
         // Set the parameters for the current Wave
-        wave.setAmplitude(amplitude.getText().isEmpty() ? 1.0 : wave.convertToNum(amplitude.getText()));
-        wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 1.0 : wave.convertToNum(angWaveNum.getText()));
-        wave.setAngFreq(angFreq.getText().isEmpty() ? 1.0 : wave.convertToNum(angFreq.getText()));
+        wave.setAmplitude(amplitude.getText().isEmpty() ? 0.0 : wave.convertToNum(amplitude.getText()));
+        wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 0.0 : wave.convertToNum(angWaveNum.getText()));
+        wave.setAngFreq(angFreq.getText().isEmpty() ? 0.0 : wave.convertToNum(angFreq.getText()));
         wave.setPhaseDiff(phaseDiff.getText().isEmpty() ? 0.0 : wave.convertToNum(phaseDiff.getText()));
         wave.setType(type.getValue());
 
@@ -109,7 +140,7 @@ public class WaveController {
         equation.setText(updateEquation());
 
         // Set the points based on the previous parameters.
-        wave.setPoints();
+        wave.setPoints(time);
         // Clear the current chart & Add the new points to the chart
         chart.getData().clear();
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -129,23 +160,17 @@ public class WaveController {
     private String updateEquation() {
         String equation = "y(x,t) = Asin(kx-ωt+δ)";
 
-        if (!getAmplitudeString().isEmpty()) {
+        equation = equation.replace("kx", getAngWaveNumString());
+        equation = equation.replace("-ωt", getAngFreqString());
+        equation = equation.replace("+δ", getPhaseDiffString());
+        equation = equation.replace("sin",  getTypeString());
+        if (getAmplitudeString().isEmpty()) {
+            return "y(x,t) = none (because amplitude is 0)";
+        } else {
             equation = equation.replace("A", getAmplitudeString());
         }
-        if (!getAngWaveNumString().isEmpty()) {
-            equation = equation.replace("k", getAngWaveNumString());
-        }
-        if (!getAngFreqString().isEmpty()) {
-            equation = equation.replace("-ωt", getAngFreqString());
-        }
-        if (!getPhaseDiffString().isEmpty()) {
-            equation = equation.replace("+δ", getPhaseDiffString());
-        }
-        if (!getTypeString().isEmpty()) {
-            equation = equation.replace("sin",  getTypeString());
-        }
 
-        return equation;
+        return equation.replace(" ", "");
     }
 
     /**
@@ -153,8 +178,10 @@ public class WaveController {
      * @return The amplitude to be displayed as a String.
      */
     public String getAmplitudeString() {
-        if (amplitude.getText().isEmpty() || amplitude.getText().equals("1")) {
+        if (amplitude.getText().isEmpty() || amplitude.getText().equals("0")) {
             return "";
+        } else if (amplitude.getText().equals("1")) {
+            return " ";
         } else {
             return amplitude.getText();
         }
@@ -169,7 +196,7 @@ public class WaveController {
             return "-t";
         }
         else if (angFreq.getText().isEmpty() || angFreq.getText().equals("0")) {
-            return "";
+            return " ";
         }
         else if (angFreq.getText().contains("-")) {
             return angFreq.getText().replace("-", "+") + "t";
@@ -183,10 +210,12 @@ public class WaveController {
      * @return The angular wave number to be displayed as a String.
      */
     public String getAngWaveNumString() {
-        if (angWaveNum.getText().isEmpty() || angWaveNum.getText().equals("1")) {
-            return "";
+        if (angWaveNum.getText().isEmpty() || angWaveNum.getText().equals("0")) {
+            return " ";
+        } else if (angWaveNum.getText().equals("1")) {
+            return "k";
         } else {
-            return angWaveNum.getText();
+            return angWaveNum.getText() + "x";
         }
     }
 
@@ -196,10 +225,9 @@ public class WaveController {
      */
     public String getPhaseDiffString() {
         String result;
+        result =  "+" + phaseDiff.getText();
         if (phaseDiff.getText().isEmpty() || phaseDiff.getText().equals("0")) {
-            result = "";
-        } else {
-            result =  "+" + phaseDiff.getText();
+            return " ";
         }
         if (phaseDiff.getText().contains("-")) {
             result = "-" +  phaseDiff.getText().replace("-", "");
@@ -240,5 +268,6 @@ public class WaveController {
         phaseDiff.setText("0");
         type.setValue(SIN);
         updateChart();
+        currentFilePath = null;
     }
 }
