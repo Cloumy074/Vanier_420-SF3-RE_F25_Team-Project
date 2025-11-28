@@ -59,7 +59,11 @@ public class WaveController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files", "*.png*"));
         File saveFile = fileChooser.showSaveDialog(stage);
         if (saveFile != null) {
-            Utils.exportImage(saveFile.getAbsolutePath(),chart);
+            if (saveFile.getAbsolutePath().endsWith(".png")) {
+                Utils.exportImage(saveFile.getAbsolutePath(),chart);
+            } else {
+                Utils.exportImage(saveFile.getAbsolutePath() + ".png",chart);
+            }
         }
     }
 
@@ -98,7 +102,11 @@ public class WaveController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wave files", "*.wave*"));
         File saveFile = fileChooser.showSaveDialog(stage);
         if (saveFile != null) {
-            currentFilePath = saveFile.getAbsolutePath() + ".wave";
+            if (saveFile.getAbsolutePath().contains(".wave")) {
+                currentFilePath = saveFile.getAbsolutePath();
+            } else {
+                currentFilePath = saveFile.getAbsolutePath() +  ".wave";
+            }
             Utils.exportFile(wave, currentFilePath);
         }
     }
