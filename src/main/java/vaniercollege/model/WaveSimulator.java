@@ -17,7 +17,7 @@ public class WaveSimulator {
     private double waveLength;
     private double frequency;
     private double speed;
-    @Getter private double[][] points =  new double[150][2];
+    @Getter private double[][] points =  new double[150][2];    // 150 because 15/0.1 = 150
 
     /**
      * No-args Constructor with Sample SIN wave data.
@@ -102,7 +102,7 @@ public class WaveSimulator {
     /**
      * Set all the Y positions of the Wave to make a series of points for the chart.
      */
-    public void setPoints(int time) {
+    public void setPoints(double time) {
         double start = 0.1;
         double end = 15.00;
         int idx = 0;

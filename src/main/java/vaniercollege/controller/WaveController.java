@@ -1,11 +1,13 @@
 package vaniercollege.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lombok.*;
+import javafx.util.Duration;
 import vaniercollege.model.WaveSimulator;
 import vaniercollege.utils.*;
 
@@ -35,18 +37,34 @@ public class WaveController {
     @FXML private TextField phaseDiff;
     @FXML private ComboBox<WaveType> type;
 
+    XYChart.Series<Number, Number> series = new XYChart.Series<>();
     private final WaveSimulator wave =  new WaveSimulator();
     private String currentFilePath;
-    @Getter @Setter private int time = 0;
     private SoundStatus soundStatus = SoundStatus.PAUSED;
     private WaveStatus waveStatus = WaveStatus.PAUSED;
     SoundController soundController;
+    Timeline animTimeLine;
+    private double time = 0;
 
     @FXML
     public void initialize() throws LineUnavailableException, IOException {
         type.getItems().addAll(SIN,COS);
         type.setValue(SIN);
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        initializePoints();
+        chart.setCreateSymbols(false);
+        chart.setAnimated(false);
+        displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
+        displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
+        displaySpeed.setText(String.format("Velocity: %.2f",wave.getSpeed()));
+
+        soundController = new SoundController(wave);
+
+        updateTimeLine();
+    }
+
+    private void initializePoints() {
+        chart.getData().clear();
+        series.getData().clear();
         series.setName("Wave");
         for (int i = 0; i < wave.getPoints().length; i++) {
             if (wave.getPoints()[i][0] != 0 && wave.getPoints()[i][1] != 0) {
@@ -54,11 +72,22 @@ public class WaveController {
             }
         }
         chart.getData().add(series);
-        displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
-        displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
-        displaySpeed.setText(String.format("Velocity: %.2f",wave.getSpeed()));
+    }
 
-        soundController = new SoundController(wave);
+    private void updateTimeLine() {
+        animTimeLine = new Timeline(
+                new KeyFrame(Duration.millis(16), event -> {
+                    time += 0.05;
+                    for (int i = 0; i < wave.getPoints().length; i++) {
+                        XYChart.Data<Number,Number> data = series.getData().get(i);
+                        double x = data.getXValue().doubleValue();
+                        double y = wave.getYPos(x, time);
+                        data.setYValue(y);
+                    }
+                })
+        );
+
+        animTimeLine.setCycleCount(Timeline.INDEFINITE);
     }
 
     /**
@@ -161,17 +190,10 @@ public class WaveController {
         equation.setText(updateEquation());
 
         // Set the points based on the previous parameters.
-        wave.setPoints(time);
+        wave.setPoints(0);
         // Clear the current chart & Add the new points to the chart
         chart.getData().clear();
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Wave");
-        for (int i = 0; i < wave.getPoints().length; i++) {
-            if (wave.getPoints()[i][0] != 0 && wave.getPoints()[i][1] != 0) {
-                series.getData().add(new XYChart.Data<>(wave.getPoints()[i][0], wave.getPoints()[i][1]));
-            }
-        }
-        chart.getData().add(series);
+        initializePoints();
 
         displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
         displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
@@ -184,6 +206,8 @@ public class WaveController {
         } else {
             soundController = new SoundController(wave);
         }
+
+        updateTimeLine();
     }
 
     /**
@@ -283,6 +307,15 @@ public class WaveController {
      * Handler for the Play Animation button. Plays or Pauses the chart animation
      */
     public void playAnim() {
+        if (waveStatus == WaveStatus.PAUSED) {
+            playAnimBtn.setText("Pause");
+            animTimeLine.play();
+            waveStatus = WaveStatus.PLAYING;
+        } else if (waveStatus == WaveStatus.PLAYING) {
+            playAnimBtn.setText("Play");
+            animTimeLine.pause();
+            waveStatus = WaveStatus.PAUSED;
+        }
     }
 
     /**
@@ -315,5 +348,8 @@ public class WaveController {
         type.setValue(SIN);
         updateChart();
         currentFilePath = null;
+        animTimeLine.stop();
+        time = 0;
+        updateTimeLine();
     }
 }
