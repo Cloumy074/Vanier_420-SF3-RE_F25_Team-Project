@@ -2,9 +2,9 @@ module vaniercollege.view {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.media;
-    requires static lombok;
     requires java.desktop;
     requires javafx.swing;
+    requires static lombok;
 
 
     exports vaniercollege.view;

@@ -52,7 +52,7 @@ public class Utils {
      * @param chart The current chart.
      */
     public static void exportImage(String path, LineChart<Number, Number> chart) {
-        WritableImage wi = chart.snapshot(new SnapshotParameters(), new WritableImage((int)chart.getPrefWidth(),(int)chart.getPrefHeight() ));
+        WritableImage wi = chart.snapshot(new SnapshotParameters(), new WritableImage((int) chart.getPrefWidth(), (int) chart.getPrefHeight()));
         File file = new File(path);
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(wi, null), "png", file);

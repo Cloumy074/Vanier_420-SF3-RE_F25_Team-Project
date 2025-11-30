@@ -23,45 +23,67 @@ import static vaniercollege.utils.WaveType.*;
  * @author Yu Duo Zhang (2480549)
  */
 public class WaveController {
-    @FXML private Button playAnimBtn;
-    @FXML private Button playSoundBtn;
-    @FXML private TextField displayFreq;
-    @FXML private TextField displayWL;
-    @FXML private TextField displaySpeed;
-    @FXML private NumberAxis yAxis;
-    @FXML private TextField amplitude;
-    @FXML private TextField angFreq;
-    @FXML private TextField angWaveNum;
-    @FXML private LineChart<Number, Number> chart;
-    @FXML private Label equation;
-    @FXML private TextField phaseDiff;
-    @FXML private ComboBox<WaveType> type;
+    @FXML
+    private Button playAnimBtn;
+    @FXML
+    private Button playSoundBtn;
+    @FXML
+    private TextField displayFreq;
+    @FXML
+    private TextField displayWL;
+    @FXML
+    private TextField displaySpeed;
+    @FXML
+    private NumberAxis yAxis;
+    @FXML
+    private TextField amplitude;
+    @FXML
+    private TextField angFreq;
+    @FXML
+    private TextField angWaveNum;
+    @FXML
+    private LineChart<Number, Number> chart;
+    @FXML
+    private Label equation;
+    @FXML
+    private TextField phaseDiff;
+    @FXML
+    private ComboBox<WaveType> type;
 
-    XYChart.Series<Number, Number> series = new XYChart.Series<>();
-    private final WaveSimulator wave =  new WaveSimulator();
-    private String currentFilePath;
-    private SoundStatus soundStatus = SoundStatus.PAUSED;
-    private WaveStatus waveStatus = WaveStatus.PAUSED;
-    SoundController soundController;
-    Timeline animTimeLine;
-    private double time = 0;
+    XYChart.Series<Number, Number> series = new XYChart.Series<>();     // Points on the chart
+    private final WaveSimulator wave = new WaveSimulator();             // Wave to be used
+    private String currentFilePath;                                     // Current Opened File Path (For File IO)
+    private SoundStatus soundStatus = SoundStatus.PAUSED;               // Current Sound Status (For Sound Playing)
+    private WaveStatus waveStatus = WaveStatus.PAUSED;                  // Current Animation Status (For Traveling Wave Animation)
+    private SoundController soundController;                            // Sound Controller for sound generation
+    private Timeline animTimeLine;                                      // TimeLine for Animation
+    private double time = 0;                                            // Time Reference For Animation
 
+    /**
+     *  Initialize the program controller
+     */
     @FXML
     public void initialize() throws LineUnavailableException, IOException {
-        type.getItems().addAll(SIN,COS);
+        // Add Types in ComboBox
+        type.getItems().addAll(SIN, COS);
         type.setValue(SIN);
+
+        // Initialize points on Chart
         initializePoints();
         chart.setCreateSymbols(false);
         chart.setAnimated(false);
-        displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
-        displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
-        displaySpeed.setText(String.format("Velocity: %.2f",wave.getSpeed()));
 
+        infoDisplay();
+
+        // Generate sound for current wave
         soundController = new SoundController(wave);
 
         updateTimeLine();
     }
 
+    /**
+     * Initialize a Timeline for the Traveling Waves Animation
+     */
     private void initializePoints() {
         chart.getData().clear();
         series.getData().clear();
@@ -74,12 +96,15 @@ public class WaveController {
         chart.getData().add(series);
     }
 
+    /**
+     * Update the Animation Timeline for a new Wave
+     */
     private void updateTimeLine() {
         animTimeLine = new Timeline(
                 new KeyFrame(Duration.millis(16), event -> {
                     time += 0.05;
                     for (int i = 0; i < wave.getPoints().length; i++) {
-                        XYChart.Data<Number,Number> data = series.getData().get(i);
+                        XYChart.Data<Number, Number> data = series.getData().get(i);
                         double x = data.getXValue().doubleValue();
                         double y = wave.getYPos(x, time);
                         data.setYValue(y);
@@ -88,6 +113,151 @@ public class WaveController {
         );
 
         animTimeLine.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    /**
+     * Update the chart for every parameter change.
+     */
+    @FXML
+    public void updateChart() throws LineUnavailableException, IOException {
+        // Set the parameters for the current Wave
+        wave.setAmplitude(amplitude.getText().isEmpty() ? 0.0 : wave.convertToNum(amplitude.getText()));
+        wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 0.0 : wave.convertToNum(angWaveNum.getText()));
+        wave.setAngFreq(angFreq.getText().isEmpty() ? 0.0 : wave.convertToNum(angFreq.getText()));
+        wave.setPhaseDiff(phaseDiff.getText().isEmpty() ? 0.0 : wave.convertToNum(phaseDiff.getText()));
+        wave.setType(type.getValue());
+
+        // Auto range the chart if it's about to pass the fixed bound. Else change the bound back to 5 and -5.
+        if (wave.getAmplitude() >= 5) {
+            yAxis.setAutoRanging(true);
+        } else {
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(-5);
+            yAxis.setUpperBound(5);
+        }
+
+        // Update the equation showing at the bottom.
+        equation.setText(updateEquation());
+
+        // Set the points based on the previous parameters.
+        wave.setPoints(0);
+        // Clear the current chart & Add the new points to the chart
+        chart.getData().clear();
+        initializePoints();
+
+        infoDisplay();
+
+        // Restart Sound Generation
+        if (soundStatus == SoundStatus.PLAYING) {
+            soundController.stop();
+            soundController = new SoundController(wave);
+            soundController.start();
+        } else {
+            soundController = new SoundController(wave);
+        }
+
+        updateTimeLine();
+    }
+
+    /**
+     * Displays / Updates current wave's Frequency, Wave length & Velocity
+     */
+    private void infoDisplay() {
+        // Display Frequency, Wavelength & Velocity
+        displayFreq.setText(String.format("Frequency: %.2f", wave.getFrequency()));
+        displayWL.setText(String.format("Wave Length: %.2f", wave.getWaveLength()));
+        displaySpeed.setText(String.format("Velocity: %.2f", wave.getSpeed()));
+    }
+
+    /**
+     * Update the Equation to be displayed at the bottom.
+     * @return The updated equation as a String
+     */
+    private String updateEquation() {
+        String equation = "y(x,t) = Asin(kx-ωt+δ)";
+
+        equation = equation.replace("kx", getAngWaveNumString());
+        equation = equation.replace("-ωt", getAngFreqString());
+        equation = equation.replace("+δ", getPhaseDiffString());
+        equation = equation.replace("sin", getTypeString());
+        if (getAmplitudeString().isEmpty()) {
+            return "y(x,t) = none (because amplitude is 0)";
+        } else {
+            equation = equation.replace("A", getAmplitudeString());
+        }
+
+        return equation.replace(" ", "");
+    }
+
+    /**
+     * Get the string of the amplitude to be used for the equation display
+     * @return The amplitude to be displayed as a String.
+     */
+    public String getAmplitudeString() {
+        if (amplitude.getText().isEmpty() || amplitude.getText().equals("0")) {
+            return "";
+        } else if (amplitude.getText().equals("1")) {
+            return " ";
+        } else {
+            return amplitude.getText();
+        }
+    }
+
+    /**
+     * Get the string of the angular frequency to be used for the equation display
+     * @return The angular frequency to be displayed as a String.
+     */
+    public String getAngFreqString() {
+        if (angFreq.getText().equals("1")) {
+            return "-t";
+        } else if (angFreq.getText().isEmpty() || angFreq.getText().equals("0")) {
+            return " ";
+        } else if (angFreq.getText().contains("-")) {
+            return angFreq.getText().replace("-", "+") + "t";
+        } else {
+            return "-" + angFreq.getText() + "t";
+        }
+    }
+
+    /**
+     * Get the string of the angular wave number to be used for the equation display
+     * @return The angular wave number to be displayed as a String.
+     */
+    public String getAngWaveNumString() {
+        if (angWaveNum.getText().isEmpty() || angWaveNum.getText().equals("0")) {
+            return " ";
+        } else if (angWaveNum.getText().equals("1")) {
+            return "k";
+        } else {
+            return angWaveNum.getText() + "x";
+        }
+    }
+
+    /**
+     * Get the string of the phase difference to be used for the equation display
+     * @return The phase difference to be displayed as a String.
+     */
+    public String getPhaseDiffString() {
+        String result;
+        result = "+" + phaseDiff.getText();
+        if (phaseDiff.getText().isEmpty() || phaseDiff.getText().equals("0")) {
+            return " ";
+        }
+        if (phaseDiff.getText().contains("-")) {
+            result = "-" + phaseDiff.getText().replace("-", "");
+        }
+        if (phaseDiff.getText().contains("\\pi")) {
+            result = "+" + phaseDiff.getText().replace("\\pi", "π");
+        }
+        return result;
+    }
+
+    /**
+     * Get the String of the type to be used for the equation display
+     * @return The type to be displayed as a String.
+     */
+    public String getTypeString() {
+        return type.getValue().toString();
     }
 
     /**
@@ -102,9 +272,9 @@ public class WaveController {
         File saveFile = fileChooser.showSaveDialog(stage);
         if (saveFile != null) {
             if (saveFile.getAbsolutePath().endsWith(".png")) {
-                Utils.exportImage(saveFile.getAbsolutePath(),chart);
+                Utils.exportImage(saveFile.getAbsolutePath(), chart);
             } else {
-                Utils.exportImage(saveFile.getAbsolutePath() + ".png",chart);
+                Utils.exportImage(saveFile.getAbsolutePath() + ".png", chart);
             }
         }
     }
@@ -147,7 +317,7 @@ public class WaveController {
             if (saveFile.getAbsolutePath().contains(".wave")) {
                 currentFilePath = saveFile.getAbsolutePath();
             } else {
-                currentFilePath = saveFile.getAbsolutePath() +  ".wave";
+                currentFilePath = saveFile.getAbsolutePath() + ".wave";
             }
             Utils.exportFile(wave, currentFilePath);
         }
@@ -163,144 +333,6 @@ public class WaveController {
         } else {
             saveAsFile();
         }
-    }
-
-    /**
-     * Update the chart for every parameter change.
-     */
-    @FXML
-    public void updateChart() throws LineUnavailableException, IOException {
-        // Set the parameters for the current Wave
-        wave.setAmplitude(amplitude.getText().isEmpty() ? 0.0 : wave.convertToNum(amplitude.getText()));
-        wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 0.0 : wave.convertToNum(angWaveNum.getText()));
-        wave.setAngFreq(angFreq.getText().isEmpty() ? 0.0 : wave.convertToNum(angFreq.getText()));
-        wave.setPhaseDiff(phaseDiff.getText().isEmpty() ? 0.0 : wave.convertToNum(phaseDiff.getText()));
-        wave.setType(type.getValue());
-
-        // Auto range the chart if it's about to pass the fixed bound. Else change the bound back to 5 and -5.
-        if (wave.getAmplitude() >= 5) {
-            yAxis.setAutoRanging(true);
-        } else {
-            yAxis.setAutoRanging(false);
-            yAxis.setLowerBound(-5);
-            yAxis.setUpperBound(5);
-        }
-
-        // Update the equation showing at the bottom.
-        equation.setText(updateEquation());
-
-        // Set the points based on the previous parameters.
-        wave.setPoints(0);
-        // Clear the current chart & Add the new points to the chart
-        chart.getData().clear();
-        initializePoints();
-
-        displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
-        displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
-        displaySpeed.setText(String.format("Velocity: %.2f",wave.getSpeed()));
-
-        if (soundStatus == SoundStatus.PLAYING) {
-            soundController.stop();
-            soundController = new SoundController(wave);
-            soundController.start();
-        } else {
-            soundController = new SoundController(wave);
-        }
-
-        updateTimeLine();
-    }
-
-    /**
-     * Update the Equation to be displayed at the bottom.
-     * @return The updated equation as a String
-     */
-    private String updateEquation() {
-        String equation = "y(x,t) = Asin(kx-ωt+δ)";
-
-        equation = equation.replace("kx", getAngWaveNumString());
-        equation = equation.replace("-ωt", getAngFreqString());
-        equation = equation.replace("+δ", getPhaseDiffString());
-        equation = equation.replace("sin",  getTypeString());
-        if (getAmplitudeString().isEmpty()) {
-            return "y(x,t) = none (because amplitude is 0)";
-        } else {
-            equation = equation.replace("A", getAmplitudeString());
-        }
-
-        return equation.replace(" ", "");
-    }
-
-    /**
-     * Get the string of the amplitude to be used for the equation display
-     * @return The amplitude to be displayed as a String.
-     */
-    public String getAmplitudeString() {
-        if (amplitude.getText().isEmpty() || amplitude.getText().equals("0")) {
-            return "";
-        } else if (amplitude.getText().equals("1")) {
-            return " ";
-        } else {
-            return amplitude.getText();
-        }
-    }
-
-    /**
-     * Get the string of the angular frequency to be used for the equation display
-     * @return The angular frequency to be displayed as a String.
-     */
-    public String getAngFreqString() {
-        if (angFreq.getText().equals("1")) {
-            return "-t";
-        }
-        else if (angFreq.getText().isEmpty() || angFreq.getText().equals("0")) {
-            return " ";
-        }
-        else if (angFreq.getText().contains("-")) {
-            return angFreq.getText().replace("-", "+") + "t";
-        } else {
-            return "-" + angFreq.getText() + "t";
-        }
-    }
-
-    /**
-     * Get the string of the angular wave number to be used for the equation display
-     * @return The angular wave number to be displayed as a String.
-     */
-    public String getAngWaveNumString() {
-        if (angWaveNum.getText().isEmpty() || angWaveNum.getText().equals("0")) {
-            return " ";
-        } else if (angWaveNum.getText().equals("1")) {
-            return "k";
-        } else {
-            return angWaveNum.getText() + "x";
-        }
-    }
-
-    /**
-     * Get the string of the phase difference to be used for the equation display
-     * @return The phase difference to be displayed as a String.
-     */
-    public String getPhaseDiffString() {
-        String result;
-        result =  "+" + phaseDiff.getText();
-        if (phaseDiff.getText().isEmpty() || phaseDiff.getText().equals("0")) {
-            return " ";
-        }
-        if (phaseDiff.getText().contains("-")) {
-            result = "-" +  phaseDiff.getText().replace("-", "");
-        }
-        if (phaseDiff.getText().contains("\\pi")) {
-            result = "+" + phaseDiff.getText().replace("\\pi", "π");
-        }
-        return result;
-    }
-
-    /**
-     * Get the String of the type to be used for the equation display
-     * @return The type to be displayed as a String.
-     */
-    public String getTypeString() {
-        return type.getValue().toString();
     }
 
     /**
@@ -326,8 +358,7 @@ public class WaveController {
             playSoundBtn.setText("Pause");
             soundStatus = SoundStatus.PLAYING;
             soundController.start();
-        }
-        else {
+        } else {
             playSoundBtn.setText("Sound");
             soundStatus = SoundStatus.PAUSED;
             soundController.stop();

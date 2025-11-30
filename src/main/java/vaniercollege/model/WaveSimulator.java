@@ -9,15 +9,26 @@ import vaniercollege.utils.WaveType;
  * @author Yu Duo Zhang (2480549)
  */
 public class WaveSimulator {
-    @Getter @Setter private double amplitude;
-    @Getter @Setter private double angWaveNum;
-    @Getter @Setter private double angFreq;
-    @Getter @Setter private double phaseDiff;
-    @Getter @Setter private WaveType type;
+    @Getter
+    @Setter
+    private double amplitude;
+    @Getter
+    @Setter
+    private double angWaveNum;
+    @Getter
+    @Setter
+    private double angFreq;
+    @Getter
+    @Setter
+    private double phaseDiff;
+    @Getter
+    @Setter
+    private WaveType type;
     private double waveLength;
     private double frequency;
     private double speed;
-    @Getter private double[][] points =  new double[150][2];    // 150 because 15/0.1 = 150
+    @Getter
+    private double[][] points = new double[150][2];    // 150 because 15/0.1 = 150
 
     /**
      * No-args Constructor with Sample SIN wave data.
@@ -33,7 +44,7 @@ public class WaveSimulator {
         this.waveLength = getWaveLength();
         this.setPoints(0);
     }
-    
+
     /**
      * Full-args Constructor
      * @param amplitude The Amplitude of the Wave
@@ -87,7 +98,7 @@ public class WaveSimulator {
     public double getYPos(double x, double t) {
         WaveType waveType = getType();
         double result = 0;
-        
+
         switch (waveType) {
             case SIN -> {
                 result = getAmplitude() * Math.sin((getAngWaveNum() * x) - (getAngFreq() * t) + getPhaseDiff());
@@ -121,28 +132,27 @@ public class WaveSimulator {
      * @return the number that user meant by the input.
      */
     public double convertToNum(String input) {
-        input = input.replace(" ","");
+        input = input.replace(" ", "");
         double num = 0;
         // Discard all spaces
-        input = input.replace(" ","");
+        input = input.replace(" ", "");
 
         // Handle PI
-        if(input.contains("\\pi")) {
-            int idxMult =  input.indexOf("\\") - 1;
+        if (input.contains("\\pi")) {
+            int idxMult = input.indexOf("\\") - 1;
             // If there are other numbers before PI (Which means a multiplication to PI)
-            if(idxMult != -1) {
-                num += Double.parseDouble(input.replace("\\pi","")) * Math.PI;
+            if (idxMult != -1) {
+                num += Double.parseDouble(input.replace("\\pi", "")) * Math.PI;
             } else {
                 num += Math.PI;
             }
         }
         // Handle while typing but is still trying to convert issue
-        else if(input.equals("-")) {
+        else if (input.equals("-")) {
             return 0;
         } else if (input.contains("\\")) {
             return 0;
-        }
-        else if(input.isEmpty()) {
+        } else if (input.isEmpty()) {
             return 0;
         }
         // If it does not need to handle PI, directly parse.
@@ -155,6 +165,6 @@ public class WaveSimulator {
 
     @Override
     public String toString() {
-        return String.format("%.2f,%.2f,%.2f,%.2f,%s",this.getAmplitude(), this.getAngWaveNum(), this.getAngFreq(), this.getPhaseDiff(), this.getType().toString().toUpperCase());
+        return String.format("%.2f,%.2f,%.2f,%.2f,%s", this.getAmplitude(), this.getAngWaveNum(), this.getAngFreq(), this.getPhaseDiff(), this.getType().toString().toUpperCase());
     }
 }
