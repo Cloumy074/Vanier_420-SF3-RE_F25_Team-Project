@@ -51,7 +51,7 @@ public class WaveController {
     private ComboBox<WaveType> type;
 
     XYChart.Series<Number, Number> series = new XYChart.Series<>();     // Points on the chart
-    private final WaveSimulator wave = new WaveSimulator();             // Wave to be used
+    private WaveSimulator wave = new WaveSimulator();             // Wave to be used
     private String currentFilePath;                                     // Current Opened File Path (For File IO)
     private SoundStatus soundStatus = SoundStatus.PAUSED;               // Current Sound Status (For Sound Playing)
     private WaveStatus waveStatus = WaveStatus.PAUSED;                  // Current Animation Status (For Traveling Wave Animation)
@@ -293,13 +293,13 @@ public class WaveController {
         if (openFile != null) {
             currentFilePath = openFile.getAbsolutePath();
             datas = Utils.importFile(currentFilePath);
+            wave = new WaveSimulator(Double.parseDouble(datas[0]), Double.parseDouble(datas[1]), Double.parseDouble(datas[2]), Double.parseDouble(datas[3]), WaveType.valueOf(datas[4]));
             this.amplitude.setText(datas[0]);
-            this.angFreq.setText(datas[1]);
-            this.angWaveNum.setText(datas[2]);
+            this.angWaveNum.setText(datas[1]);
+            this.angFreq.setText(datas[2]);
             this.phaseDiff.setText(datas[3]);
             this.type.setValue(WaveType.valueOf(datas[4]));
             updateChart();
-            updateEquation();
         }
     }
 

@@ -24,9 +24,6 @@ public class WaveSimulator {
     @Getter
     @Setter
     private WaveType type;
-    private double waveLength;
-    private double frequency;
-    private double speed;
     @Getter
     private double[][] points = new double[150][2];    // 150 because 15/0.1 = 150
 
@@ -39,9 +36,6 @@ public class WaveSimulator {
         this.angFreq = 1;
         this.phaseDiff = 0;
         this.type = WaveType.SIN;
-        this.speed = getSpeed();
-        this.frequency = getFrequency();
-        this.waveLength = getWaveLength();
         this.setPoints(0);
     }
 
@@ -59,9 +53,6 @@ public class WaveSimulator {
         this.angFreq = angFreq;
         this.phaseDiff = phaseDiff;
         this.type = type;
-        this.speed = this.getSpeed();
-        this.frequency = this.getFrequency();
-        this.waveLength = this.getWaveLength();
         this.setPoints(0);
     }
 
