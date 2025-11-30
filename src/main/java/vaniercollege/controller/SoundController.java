@@ -15,7 +15,7 @@ import javax.sound.sampled.*;
 public class SoundController {
     private static final int SAMPLE_RATE = 44100;
     private final WaveSimulator wave;
-    private final Clip clip;    // Audio Clip to be played
+    private Clip clip;          // Audio Clip to be played
     private byte[] buffer;      //Buffer to store the audio data.
 
     /**
@@ -46,7 +46,7 @@ public class SoundController {
     private void updateBuffer() {
         buffer = new byte[clip.getBufferSize()];
         for (int i = 0; i < buffer.length; i++) {
-            buffer[i] = getBufferValue(wave.getYPos(0, i / SAMPLE_RATE));
+            buffer[i] = getBufferValue(wave.getYPos(0, (double) i / SAMPLE_RATE));
         }
     }
 

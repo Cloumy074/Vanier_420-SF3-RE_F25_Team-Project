@@ -84,7 +84,7 @@ public class WaveSimulator {
      * @param t The time.
      * @return the Y position of the wave.
      */
-    public double getYPos(double x, int t) {
+    public double getYPos(double x, double t) {
         WaveType waveType = getType();
         double result = 0;
         
