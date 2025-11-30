@@ -9,7 +9,9 @@ import lombok.*;
 import vaniercollege.model.WaveSimulator;
 import vaniercollege.utils.*;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
+import java.io.IOException;
 
 import static vaniercollege.utils.WaveType.*;
 
@@ -31,11 +33,14 @@ public class WaveController {
     @FXML private ComboBox<WaveType> type;
 
     private final WaveSimulator wave =  new WaveSimulator();
-    @Getter @Setter private double time = 0;
     private String currentFilePath;
+    @Getter @Setter private int time = 0;
+    private SoundStatus soundStatus = SoundStatus.PAUSED;
+    private WaveStatus waveStatus = WaveStatus.PAUSED;
+    SoundController soundController;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws LineUnavailableException, IOException {
         type.getItems().addAll(SIN,COS);
         type.setValue(SIN);
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -46,6 +51,7 @@ public class WaveController {
             }
         }
         chart.getData().add(series);
+        soundController = new SoundController(wave);
     }
 
     /**
@@ -71,7 +77,7 @@ public class WaveController {
      * Load a saved file.
      */
     @FXML
-    public void loadFile() {
+    public void loadFile() throws LineUnavailableException, IOException {
         String[] datas;
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
@@ -127,7 +133,7 @@ public class WaveController {
      * Update the chart for every parameter change.
      */
     @FXML
-    public void updateChart() {
+    public void updateChart() throws LineUnavailableException, IOException {
         // Set the parameters for the current Wave
         wave.setAmplitude(amplitude.getText().isEmpty() ? 0.0 : wave.convertToNum(amplitude.getText()));
         wave.setAngWaveNum(angWaveNum.getText().isEmpty() ? 0.0 : wave.convertToNum(angWaveNum.getText()));
@@ -159,6 +165,13 @@ public class WaveController {
             }
         }
         chart.getData().add(series);
+        if (soundStatus == SoundStatus.PLAYING) {
+            soundController.stop();
+            soundController = new SoundController(wave);
+            soundController.start();
+        } else {
+            soundController = new SoundController(wave);
+        }
     }
 
     /**
@@ -264,12 +277,25 @@ public class WaveController {
      * Handler for the Play Sound button. Plays or stops the frequency of the current wave.
      */
     public void playSound() {
+        if (soundStatus == SoundStatus.PAUSED) {
+            playSoundBtn.setText("Pause");
+            soundStatus = SoundStatus.PLAYING;
+            soundController.start();
+        }
+        else {
+            playSoundBtn.setText("Sound");
+            soundStatus = SoundStatus.PAUSED;
+            soundController.stop();
+        }
     }
 
     /**
      * Reset all parameters of the current wave.
      */
-    public void reset() {
+    public void reset() throws LineUnavailableException, IOException {
+        soundStatus = SoundStatus.PAUSED;
+        soundController.stop();
+        playSoundBtn.setText("Sound");
         amplitude.setText("1");
         angWaveNum.setText("1");
         angFreq.setText("1");

@@ -84,7 +84,7 @@ public class WaveSimulator {
      * @param t The time.
      * @return the Y position of the wave.
      */
-    public double getYPos(double x, double t) {
+    public double getYPos(double x, int t) {
         WaveType waveType = getType();
         double result = 0;
         
@@ -102,7 +102,7 @@ public class WaveSimulator {
     /**
      * Set all the Y positions of the Wave to make a series of points for the chart.
      */
-    public void setPoints(double time) {
+    public void setPoints(int time) {
         double start = 0.1;
         double end = 15.00;
         int idx = 0;
