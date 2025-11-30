@@ -84,6 +84,13 @@
                   <ComboBox fx:id="type" onAction="#updateChart" prefHeight="23.0" prefWidth="115.0" visibleRowCount="2" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
+            <VBox prefHeight="100.0" prefWidth="180.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="displayFreq" editable="false" promptText="Frequency:" />
+                  <TextField fx:id="displayWL" editable="false" promptText="Wave Length: " />
+                  <TextField fx:id="displaySpeed" editable="false" promptText="Velocity: " />
+               </children>
+            </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Button fx:id="playAnimBtn" mnemonicParsing="false" onAction="#playAnim" text="Play" />

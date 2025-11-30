@@ -21,8 +21,11 @@ import static vaniercollege.utils.WaveType.*;
  * @author Yu Duo Zhang (2480549)
  */
 public class WaveController {
-    @FXML public Button playAnimBtn;
-    @FXML public Button playSoundBtn;
+    @FXML private Button playAnimBtn;
+    @FXML private Button playSoundBtn;
+    @FXML private TextField displayFreq;
+    @FXML private TextField displayWL;
+    @FXML private TextField displaySpeed;
     @FXML private NumberAxis yAxis;
     @FXML private TextField amplitude;
     @FXML private TextField angFreq;
@@ -51,6 +54,10 @@ public class WaveController {
             }
         }
         chart.getData().add(series);
+        displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
+        displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
+        displaySpeed.setText(String.format("Velocity: %.2f",wave.getSpeed()));
+
         soundController = new SoundController(wave);
     }
 
@@ -165,6 +172,11 @@ public class WaveController {
             }
         }
         chart.getData().add(series);
+
+        displayFreq.setText(String.format("Frequency: %.2f",wave.getFrequency()));
+        displayWL.setText(String.format("Wave Length: %.2f",wave.getWaveLength()));
+        displaySpeed.setText(String.format("Velocity: %.2f",wave.getSpeed()));
+
         if (soundStatus == SoundStatus.PLAYING) {
             soundController.stop();
             soundController = new SoundController(wave);
