@@ -123,25 +123,11 @@ public class WaveSimulator {
      * @return the number that user meant by the input.
      */
     public double convertToNum(String input) {
-        input = input.replace(" ", "");
         double num = 0;
         // Discard all spaces
         input = input.replace(" ", "");
-
-        // Handle PI
-        if (input.contains("\\pi")) {
-            int idxMult = input.indexOf("\\") - 1;
-            // If there are other numbers before PI (Which means a multiplication to PI)
-            if (idxMult != -1) {
-                num += Double.parseDouble(input.replace("\\pi", "")) * Math.PI;
-            } else {
-                num += Math.PI;
-            }
-        }
         // Handle while typing but is still trying to convert issue
-        else if (input.equals("-")) {
-            return 0;
-        } else if (input.contains("\\")) {
+        if (input.equals("-")) {
             return 0;
         } else if (input.isEmpty()) {
             return 0;

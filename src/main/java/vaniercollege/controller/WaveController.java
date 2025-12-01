@@ -14,6 +14,7 @@ import vaniercollege.utils.*;
 import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.UnaryOperator;
 
 import static vaniercollege.utils.WaveType.*;
 
@@ -50,20 +51,38 @@ public class WaveController {
     @FXML
     private ComboBox<WaveType> type;
 
-    XYChart.Series<Number, Number> series = new XYChart.Series<>();     // Points on the chart
-    private WaveSimulator wave = new WaveSimulator();             // Wave to be used
-    private String currentFilePath;                                     // Current Opened File Path (For File IO)
-    private SoundStatus soundStatus = SoundStatus.PAUSED;               // Current Sound Status (For Sound Playing)
-    private WaveStatus waveStatus = WaveStatus.PAUSED;                  // Current Animation Status (For Traveling Wave Animation)
-    private SoundController soundController;                            // Sound Controller for sound generation
-    private Timeline animTimeLine;                                      // TimeLine for Animation
-    private double time = 0;                                            // Time Reference For Animation
+    private XYChart.Series<Number, Number> series = new XYChart.Series<>();     // Points on the chart
+    private WaveSimulator wave = new WaveSimulator();                           // Wave to be used
+    private String currentFilePath;                                             // Current Opened File Path (For File IO)
+    private SoundStatus soundStatus = SoundStatus.PAUSED;                       // Current Sound Status (For Sound Playing)
+    private WaveStatus waveStatus = WaveStatus.PAUSED;                          // Current Animation Status (For Traveling Wave Animation)
+    private SoundController soundController;                                    // Sound Controller for sound generation
+    private Timeline animTimeLine;                                              // TimeLine for Animation
+    private double time = 0;                                                    // Time Reference For Animation
+    // Filter for input
+    private final UnaryOperator<TextFormatter.Change> filter = change -> {
+        String newText = change.getControlNewText();
+
+        for (char c : newText.toCharArray()) {
+            String allowedInput = "1234567890.-";
+            if (!allowedInput.contains(String.valueOf(c))) {
+                return null;
+            }
+        }
+        return change;
+    };
 
     /**
      *  Initialize the program controller
      */
     @FXML
     public void initialize() throws LineUnavailableException, IOException {
+        // Apply filter to all text field
+        amplitude.setTextFormatter(new TextFormatter<>(filter));
+        angFreq.setTextFormatter(new TextFormatter<>(filter));
+        angWaveNum.setTextFormatter(new TextFormatter<>(filter));
+        phaseDiff.setTextFormatter(new TextFormatter<>(filter));
+
         // Add Types in ComboBox
         type.getItems().addAll(SIN, COS);
         type.setValue(SIN);
@@ -227,7 +246,7 @@ public class WaveController {
         if (angWaveNum.getText().isEmpty() || angWaveNum.getText().equals("0")) {
             return " ";
         } else if (angWaveNum.getText().equals("1")) {
-            return "k";
+            return "x";
         } else {
             return angWaveNum.getText() + "x";
         }
@@ -245,9 +264,6 @@ public class WaveController {
         }
         if (phaseDiff.getText().contains("-")) {
             result = "-" + phaseDiff.getText().replace("-", "");
-        }
-        if (phaseDiff.getText().contains("\\pi")) {
-            result = "+" + phaseDiff.getText().replace("\\pi", "π");
         }
         return result;
     }
