@@ -1,0 +1,5 @@
+module:vaniercollege
+vaniercollege.controller
+vaniercollege.model
+vaniercollege.utils
+vaniercollege.view

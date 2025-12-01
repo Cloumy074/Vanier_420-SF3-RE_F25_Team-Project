@@ -1,5 +1,5 @@
 # Changes made to the proposal
-1. Added the traveling wave equation (`Acos(kx - wt + \delta)`) to the bief description of the application, and added one mathematical relationship (the one for wavelength).
+1. Added the traveling wave equation (`Acos(kx - wt + \delta)`) to the brief description of the application, and added one mathematical relationship (the one for wavelength).
 2. Added a `reset` button to the sample interface
 3. Modified the cover page such that course name and title starts, then follows the project name and details
 
@@ -25,4 +25,4 @@ https://trello.com/b/QBSKjbH8/project
 # Testing:
 JUnit testing was at first assigned to Yixin Liu, later unfortunately got moved to the backlog due to the work overload. 
 
-So the JUnit testing in this project got pretty simplified, is only testing the calculation methods of frequency, wavelength, speed, and the getYPos() Methods since it's part of the core.
+So the JUnit testing in this project got simplified a lot, is only testing the calculation methods of frequency, wavelength, speed, and the getYPos() Methods since it's part of the core.
