@@ -74,6 +74,8 @@ public class WaveController {
 
     /**
      *  Initialize the program controller
+     * @throws LineUnavailableException Throws in case that the sound clip has no line available
+     * @throws IOException Throws in case the sound clip cannot be opened
      */
     @FXML
     public void initialize() throws LineUnavailableException, IOException {
@@ -136,6 +138,8 @@ public class WaveController {
 
     /**
      * Update the chart for every parameter change.
+     * @throws LineUnavailableException Throws in case that the sound clip has no line available
+     * @throws IOException Throws in case the sound clip cannot be opened
      */
     @FXML
     public void updateChart() throws LineUnavailableException, IOException {
@@ -297,6 +301,8 @@ public class WaveController {
 
     /**
      * Load a saved file.
+     * @throws LineUnavailableException Throws in case that the sound clip has no line available
+     * @throws IOException Throws in case the sound clip cannot be opened
      */
     @FXML
     public void loadFile() throws LineUnavailableException, IOException {
@@ -383,6 +389,8 @@ public class WaveController {
 
     /**
      * Reset all parameters of the current wave.
+     * @throws LineUnavailableException Throws in case that the sound clip has no line available
+     * @throws IOException Throws in case the sound clip cannot be opened
      */
     public void reset() throws LineUnavailableException, IOException {
         soundStatus = SoundStatus.PAUSED;

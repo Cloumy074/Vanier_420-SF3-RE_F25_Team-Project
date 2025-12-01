@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"vaniercollege","l":"vaniercollege.controller"},{"m":"vaniercollege","l":"vaniercollege.model"},{"m":"vaniercollege","l":"vaniercollege.utils"},{"m":"vaniercollege","l":"vaniercollege.view"}];updateSearchResults();
