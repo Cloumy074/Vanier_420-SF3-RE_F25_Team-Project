@@ -15,7 +15,7 @@
 
 Our project, the _Interactive Wave Physics Simulator_, is an application which aims to develop an interactive application that demonstrates various types of waves. The purpose is to provide an educational tool for students to understand better the concept of waves as it is also one of our program course for this semester.
 
-The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations ($A*cos(w t + delta)$) and their mathematical relationships (for example its frequency $lambda$ would be $lambda = (2pi)/k$). Thus, the application is centered in the domain of physics simulations.
+The application will allow users to modify parameters (frequency, amplitude, wavelength, etc.) in real time and visualize waves equations ($A*cos(k x - omega t + delta)$) and their mathematical relationships (for example its frequency $lambda$ would be $lambda = (2pi)/k$). Thus, the application is centered in the domain of physics simulations.
 
 === Functionality
 
