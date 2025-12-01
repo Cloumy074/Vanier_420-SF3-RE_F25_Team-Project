@@ -24,3 +24,5 @@ https://trello.com/b/QBSKjbH8/project
 
 # Testing:
 JUnit testing was at first assigned to Yixin Liu, later unfortunately got moved to the backlog due to the work overload. 
+
+So the JUnit testing in this project got pretty simplified, is only testing the calculation methods of frequency, wavelength, speed, and the getYPos() Methods since it's part of the core.
