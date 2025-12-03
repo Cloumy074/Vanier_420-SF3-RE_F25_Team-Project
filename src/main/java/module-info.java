@@ -6,7 +6,6 @@ module vaniercollege {
     requires javafx.swing;
     requires static lombok;
     requires static org.apiguardian.api;
-    requires static org.junit.jupiter.api;
 
     exports vaniercollege.view;
     exports vaniercollege.controller;
